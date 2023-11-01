@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import { networkPrev, networkNext } from '../../assets/index'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 /*eslint-disable */
 
 const Slider = ({
@@ -41,12 +41,13 @@ const Slider = ({
             style={{ backgroundImage: `url(${images[currentIndex]})` }}
             className={`${classSlider} relative bg-cover bg-no-repeat bg-center duration-500`}>
 
-            <img onClick={prevSlide} src={networkPrev} alt="prev"
+            <FontAwesomeIcon
                 className='absolute top-[50%] -translate-x-0 translate-y-[-350%] md:translate-y-[-50%] left-5 bg-transparent cursor-pointer'
-            />
-            <img onClick={nextSlide} src={networkNext} alt="next"
+                onClick={prevSlide} icon={faChevronLeft} />
+
+            <FontAwesomeIcon
                 className='absolute top-[50%] -translate-x-0 translate-y-[-350%] md:translate-y-[-50%] right-5 bg-transparent cursor-pointer'
-            />
+                onClick={nextSlide} icon={faChevronRight} />
 
 
             <div className='absolute bottom-2 space-x-4 hidden md:flex'>

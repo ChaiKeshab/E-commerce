@@ -1,26 +1,21 @@
-import Navbar from './Navbar/Navbar'
-import Divider from './Divider/Divider'
-import Form from './Form/Form'
 import Button from './Button/Button'
-import Card from './Card/Card'
-import CardGallery from './Card/CardGallery'
-import TestCard from './Card/TestCard'
-import Flag from './Flag/Flag'
+import Input from './Input/Input'
+import Card from './Card/ItemCard'
 import Slider from './Slider/Slider'
-import SliderSwipe from './Slider/SliderSwipe'
-import Footer from './Footer/Footer'
-
+import CategoryPills from './CategoryPills/CategoryPills'
+import GridProducts from './GridItems/GridProducts'
+import GridCategory from './GridItems/GridCategory'
+import Carousel from './Carousel/Carousel'
+import Spinner from './Spinner/Spinner'
 
 export {
-    Navbar,
-    Divider,
-    Form,
     Button,
+    Input,
     Card,
-    CardGallery,
-    TestCard,
-    Flag,
     Slider,
-    SliderSwipe,
-    Footer
+    Carousel,
+    CategoryPills,
+    GridProducts,
+    GridCategory,
+    Spinner
 };

@@ -1,15 +1,20 @@
 import { Routes, Route } from 'react-router-dom'
-import { Home } from './pages/index'
-import ProductDetails from './pages/ProductDetails'
+import { Home, CategorizedProducts, ProductDetails } from './pages/index'
+import { TopNavbar, Sidebar } from './layouts/index'
 
 const App = () => {
   return (
     <>
+      <Sidebar />
       <Routes>
+        <Route element={<TopNavbar />}>
+          <Route exact path='/' element={<Home />} />
 
-        <Route exact path='/'>
-          <Route index element={<Home />} />
-          <Route exact path={':id'} element={<ProductDetails />} />
+          <Route exact path={'/products'}>
+            {/* <Route index element={<Products />} /> */}
+            <Route exact path={':id'} element={<ProductDetails />} />
+            <Route exact path={'category/:id'} element={<CategorizedProducts />} />
+          </Route>
         </Route>
 
       </Routes>
