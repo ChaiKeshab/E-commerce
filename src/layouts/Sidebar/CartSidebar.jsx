@@ -8,7 +8,7 @@ import { isOpenSidebar } from '../../redux/index'
 const CartSidebar = () => {
 
     // const navigate = useNavigate(); 
-    const isSidebarOpen = useSelector(state => state.sidebarControl.isOpen)
+    const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen)
     const dispatch = useDispatch()
 
     const toggleSidebar = () => {

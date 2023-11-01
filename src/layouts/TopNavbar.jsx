@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Button, Input } from '../components'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link, Outlet } from 'react-router-dom';
@@ -9,8 +9,7 @@ import { isOpenSidebar } from '../redux/index'
 const Navbar = () => {
 
     const dispatch = useDispatch()
-    const isSidebarOpen = useSelector(state => state.sidebarControl.isOpen, shallowEqual)
-    console.log(isSidebarOpen, 'sideass')
+    const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen, shallowEqual)
 
     const [qsearch, setQsearch] = useState('')
     const [showFullWidthSearch, setShowFullWidthSearch] = useState(false)
@@ -25,7 +24,7 @@ const Navbar = () => {
     //hover:bg-customGrey-hover
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log('doggo')
+        console.log('searchSubmit')
     }
 
     return (

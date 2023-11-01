@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import Button from '../Button/Button'
+import { AiFillHome } from 'react-icons/ai'
 
 /*eslint-disable */
 
@@ -72,15 +73,26 @@ const CategoryPills = ({
             >
 
                 {category.map(category => (
-                    <Button
+                    <div
                         key={category}
-                        onClick={() => onSelect(category)}
-                        className={`${selectedCategory === category ? 'bg-secondary text-black hover:bg-white' : 'bg-customGrey hover:bg-customGrey-hover'}
-                        select-none text-sm font-semibold whitespace-nowrap py-1 px-3 shadow-inner rounded-lg `}
-                    >
-                        {category}
-                    </Button>
+                        className={` ${selectedCategory === category ? 'bg-secondary text-black hover:bg-white' : 'bg-customGrey hover:bg-customGrey-hover'}
+                    flex rounded-lg bg-[#E5E5E5] flex-col justify-center shadow-inner items-center w-40 space-y-5 p-8`}>
+
+                        <AiFillHome className='text-2xl' />
+                        <Button
+                            onClick={() => onSelect(category)}
+                            className={`
+                           
+                        select-none text-xs font-semibold whitespace-nowrap py-1 px-3  rounded-lg `}
+                        >
+                            {category}
+                        </Button>
+
+                    </div>
                 ))}
+
+                {/* ${selectedCategory === category ? 'bg-secondary text-black hover:bg-white' : 'bg-customGrey hover:bg-customGrey-hover'} */}
+
             </div>
 
 

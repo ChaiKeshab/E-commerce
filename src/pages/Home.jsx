@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { fetchAllCategory } from '../redux/index'
-import { Carousel, GridCategory } from "../components/index"
+import { Carousel, GridCategory, CategoryPills } from "../components/index"
 
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
     const dispatch = useDispatch()
     const apiCallRef = useRef(false)
 
-    const categoryArr = useSelector((state) => state.fetchAllCategory.category, shallowEqual)
+    const categoryArr = useSelector((state) => state.productRelatedReducer.allCategory, shallowEqual)
 
     useEffect(() => {
         // preventing double api call.
@@ -30,13 +30,43 @@ const Home = () => {
         "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"
     ]
 
+    const fakeCategory = [
+        "All",
+        "Gaming",
+        "Music",
+        "Travel",
+        "Vlogs",
+        "Cooking",
+        "How - To & DIY",
+        "Entertainment",
+        "Education",
+        "Technology",
+        "Comedy",
+        "Fitness & Wellness",
+        "Fashion & Beauty",
+        "News & Politics",
+        "Sports",
+        "Kids & Family",
+        "Science & Nature",
+        "Pets & Animals",
+        "Art & Creativity",
+        "Lifestyle"
+    ]
+
+    const [selectedCategory, setSelectedCategory] = useState(fakeCategory[0])
 
     return (
         <div className="HOME">
+            <div className=' top-0 z-10 pb-2 bg-primary'>
+                <CategoryPills
+                    category={fakeCategory}
+                    selectedCategory={selectedCategory}
+                    onSelect={setSelectedCategory} />
+            </div>
 
             <div className="h-[400px]">
                 <Carousel
-                    images={categoryArr.map(image => image.image)}
+                    images={categoryImage.map(image => image)}
                 />
             </div>
 

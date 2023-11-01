@@ -1,4 +1,4 @@
-import { IS_OPEN_SIDEBAR } from '../actions/sidebarControl';
+import * as ActionTypes from './actionTypes'
 
 const initialState = {
     isOpen: false,
@@ -6,7 +6,7 @@ const initialState = {
 
 const sidebarReducer = (state = initialState, action) => {
     switch (action.type) {
-        case IS_OPEN_SIDEBAR:
+        case ActionTypes.IS_OPEN_SIDEBAR:
             return {
                 ...state,
                 isOpen: action.payload

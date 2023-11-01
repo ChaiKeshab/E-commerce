@@ -13,8 +13,8 @@ const Products = () => {
     const outletObj = useOutletContext()
 
 
-    const specificCategoryArr = useSelector((state) => state.fetchSpecificCategory.category, shallowEqual)
-    const specificCategoryLoading = useSelector((state) => state.fetchSpecificCategory.loading, shallowEqual)
+    const specificCategoryArr = useSelector((state) => state.productRelatedReducer.specificCategory, shallowEqual)
+    const specificCategoryLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
 
 
     useEffect(() => {

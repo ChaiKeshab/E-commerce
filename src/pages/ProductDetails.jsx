@@ -1,8 +1,13 @@
 import { useEffect, useRef } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
-import { fetchSpecificProduct } from '../redux/index'
 import { useParams } from "react-router-dom"
-import { Spinner, Button } from '../components/index'
+import { Spinner, Button, Dropdown } from '../components/index'
+import {
+    fetchSpecificProduct,
+    addCartItem,
+    deleteCartItem,
+    getUserCart,
+} from '../redux/index'
 
 
 const ProductDetails = () => {
@@ -12,8 +17,8 @@ const ProductDetails = () => {
     const { id } = useParams()
 
 
-    const specificProductObj = useSelector((state) => state.fetchSpecificProduct.products, shallowEqual)
-    const specificProductLoading = useSelector((state) => state.fetchSpecificProduct.loading, shallowEqual)
+    const specificProductObj = useSelector((state) => state.productRelatedReducer.specificProducts, shallowEqual)
+    const specificProductLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
 
     const { image, title, category, price, description } = specificProductObj
 
@@ -29,6 +34,16 @@ const ProductDetails = () => {
 
     }, [dispatch, id])
 
+
+    const handleAddToCart = () => {
+        const itemData = {
+            userId: 5,
+            date: Date.now(),
+            products: [{ productId: 5, quantity: 1 }, { productId: 1, quantity: 5 }]
+        }
+        dispatch(addCartItem(itemData))
+
+    }
 
     return (
 
@@ -49,12 +64,23 @@ const ProductDetails = () => {
                 </div>
 
                 <div className="p-4 md:w-full">
-                    <h1 className="text-2xl font-semibold mb-2">{title}</h1>
-                    <p className="text-gray-600">{category}</p>
-                    <p className="text-2xl text-blue-500 font-bold mt-2">${price}</p>
-                    <p className="mt-2">{description}</p>
 
-                    <Button />
+                    <div className="my-4">
+                        <h1 className="text-2xl font-semibold mb-2">{title}</h1>
+                        <p className="text-gray-600">{category}</p>
+                        <p className="text-2xl text-blue-500 font-bold mt-2">${price}</p>
+                        <p className="mt-2">{description}</p>
+                    </div>
+
+                    <div>
+                        <Dropdown></Dropdown>
+
+                        <Button
+                            onClick={handleAddToCart}
+                            className="bg-customGrey px-5 py-2 rounded-full hover:bg-customGrey-hover flex-shrink-0">
+                            <div>Add to Cart</div>
+                        </Button>
+                    </div>
 
                 </div>
             </div>
