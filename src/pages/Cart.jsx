@@ -40,7 +40,6 @@ const Cart = () => {
 
 
 
-    // SAME FUNCTION USED IN ProductDetails. Custom Hook?
     const updateQuantityFn = (product, quantity) => {
         dispatch(updateItem(product, quantity));
     }

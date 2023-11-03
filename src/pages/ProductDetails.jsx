@@ -66,7 +66,6 @@ const ProductDetails = () => {
 
 
 
-    //This function is different from the ones from Cart.jsx and cartSidebar.jsx
     const handleAddToCart = (product, quantity) => {
         const existingCartItemIndex = cartItems.findIndex((item) => item.product.id === product.id);
 
