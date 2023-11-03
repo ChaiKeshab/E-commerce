@@ -4,10 +4,8 @@ import { useParams } from "react-router-dom"
 import { Spinner, Button, Dropdown } from '../components/index'
 import {
     fetchSpecificProduct,
-    cartStorage,
-    updateItem
+    cartStorage
 } from '../redux/index'
-
 import useLocalStorage from '../hooks/useLocalStorage'
 
 
@@ -15,10 +13,7 @@ const ProductDetails = () => {
 
     const dispatch = useDispatch()
     const apiCallRef = useRef(false)
-    const reduxUpdatesLocalRef = useRef(false)
-
-    const localUpdatesReduxRef = useRef(false)
-
+    const localStorageRef = useRef(false)
     const { id } = useParams()
 
 
@@ -26,10 +21,10 @@ const ProductDetails = () => {
     const specificProductLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
     const reduxCartItems = useSelector((state) => state.cartRelatedReducer.cart, shallowEqual);
 
+    // const localCartItems = JSON.parse(localStorage.getItem('cart'))
     const [localCartItems, setLocalCartItems] = useLocalStorage('cart', [])
 
     const { image, title, category, price, description } = specificProductObj
-
     const cartItems = reduxCartItems.length > 0 ? reduxCartItems : localCartItems;
 
     const [isCartItemAdded, setisCartItemAdded] = useState('')
@@ -41,16 +36,6 @@ const ProductDetails = () => {
     //     .map(item => item.quantity)
 
     // console.log(updateQuantity)
-
-
-
-    // const initialQuantity = () => {
-    //     const finding = cartItems.map(item =>{
-    //         if (item.product.id === specificProductObj.product.id){
-
-    //         }
-    //     })
-    // }
 
     const [quantityAmount, setQuantityAmount] = useState(1)
 
@@ -69,43 +54,43 @@ const ProductDetails = () => {
     }, [dispatch, id])
 
 
-
     //UPDATING REDUX CART THROUGH LOCAL STORAGE ON PAGE RELOAD
     useEffect(() => {
-        if (localUpdatesReduxRef.current === false) {
+        if (localCartItems.length > 0 && localStorageRef.current === false) {
             dispatch(cartStorage(localCartItems));
-            console.log('p redux updated', localCartItems,)
         }
-
         return () => {
-            localUpdatesReduxRef.current = true
+            localStorageRef.current = true
         }
-
     }, [localCartItems, dispatch])
-
-
-    useEffect(() => {
-        if (reduxUpdatesLocalRef.current === true) {
-            setLocalCartItems(reduxCartItems);
-        }
-
-        return () => {
-            reduxUpdatesLocalRef.current = true
-        }
-
-    }, [setLocalCartItems, reduxCartItems]);
-
-
 
 
 
     const handleAddToCart = (product, quantity) => {
-        dispatch(updateItem(product, quantity));
+        const existingCartItemIndex = cartItems.findIndex((item) => item.product.id === product.id);
 
-        const doesExists = cartItems.findIndex((item) => item.product.id === product.id);
+        if (existingCartItemIndex !== -1) {
+            // If the product already exists, update its quantity
+            const updatedCartItems = cartItems.map((item, index) => {
+                if (index === existingCartItemIndex) {
+                    return {
+                        ...item,
+                        quantity: quantity,
+                    };
+                }
+                return item;
+            });
 
-        if (doesExists === -1) setisCartItemAdded("Added")
-        else setisCartItemAdded("Updated")
+            dispatch(cartStorage(updatedCartItems));
+            setLocalCartItems(updatedCartItems);
+            setisCartItemAdded('Updated');
+        } else {
+            // If the product is not in the cart, add a new entry
+            const updatedCartItems = [...cartItems, { product, quantity }];
+            dispatch(cartStorage(updatedCartItems));
+            setLocalCartItems(updatedCartItems);
+            setisCartItemAdded('Added');
+        }
 
         setTimeout(() => {
             setisCartItemAdded('');

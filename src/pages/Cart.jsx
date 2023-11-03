@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { cartStorage, updateItem, removeItem } from '../redux/index';
+import { cartStorage, updateItem, removeItem, removeAllItem } from '../redux/index';
 import { Dropdown, Button } from '../components/index';
 
 const Cart = () => {
@@ -18,7 +18,6 @@ const Cart = () => {
     useEffect(() => {
         if (localUpdatesReduxRef.current === false) {
             dispatch(cartStorage(localCartItems));
-            console.log('ReduxUpdated')
         }
 
         return () => {
@@ -28,15 +27,17 @@ const Cart = () => {
     }, [localCartItems, dispatch])
 
 
+
     useEffect(() => {
         if (reduxUpdatesLocalRef.current === true) {
-            setLocalCartItems(reduxCartItems)
-            console.log('i ran')
+            setLocalCartItems(reduxCartItems);
         }
+
         return () => {
             reduxUpdatesLocalRef.current = true
         }
-    }, [reduxCartItems, setLocalCartItems]);
+
+    }, [setLocalCartItems, reduxCartItems]);
 
 
 
@@ -48,7 +49,10 @@ const Cart = () => {
     const handleRemoveCartItem = (productId) => {
         dispatch(removeItem(productId))
     }
-    console.log(cartItems, 'cartpage')
+
+    const handleRemoveAllItem = () => {
+        dispatch(removeAllItem())
+    }
 
 
     return (
@@ -135,6 +139,13 @@ const Cart = () => {
 
                 {cartItems.length > 0 &&
                     <div className="flex flex-col flex-grow px-5">
+
+                        <Button
+                            onClick={handleRemoveAllItem}
+                            className=" py-3 text-black font-semibold px-10">
+                            <div>Remove</div>
+                        </Button>
+
                         {cartItems.length > 0 && (
                             <div className="text-primary text-2xl font-semibold">
                                 Total: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}

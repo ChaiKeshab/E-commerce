@@ -13,7 +13,8 @@ import {
     getUserCart,
     cartStorage,
     updateItem,
-    removeItem
+    removeItem,
+    removeAllItem
 } from './cart/action'
 
 
@@ -29,6 +30,7 @@ export {
     cartStorage,
     updateItem,
     removeItem,
+    removeAllItem,
 
     isOpenSidebar,
     search

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isOpenSidebar, cartStorage, updateItem, removeItem } from '../../redux/index'
+import { isOpenSidebar, cartStorage, updateItem, removeItem, removeAllItem } from '../../redux/index'
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { useEffect, useRef } from "react";
@@ -29,7 +29,6 @@ const CartSidebar = () => {
     useEffect(() => {
         if (localUpdatesReduxRef.current === false) {
             dispatch(cartStorage(localCartItems));
-            console.log('ReduxUpdated')
         }
 
         return () => {
@@ -39,16 +38,19 @@ const CartSidebar = () => {
     }, [localCartItems, dispatch])
 
 
+
     useEffect(() => {
-        console.log('nyako', reduxUpdatesLocalRef.current)
         if (reduxUpdatesLocalRef.current === true) {
-            setLocalCartItems(reduxCartItems)
-            console.log('i ran')
+            setLocalCartItems(reduxCartItems);
         }
+
         return () => {
             reduxUpdatesLocalRef.current = true
         }
-    }, [reduxCartItems, setLocalCartItems]);
+
+    }, [setLocalCartItems, reduxCartItems]);
+
+
 
 
     const updateQuantityFn = (product, quantity) => {
@@ -59,7 +61,11 @@ const CartSidebar = () => {
     const handleRemoveCartItem = (productId) => {
         dispatch(removeItem(productId))
     }
-    console.log(cartItems, 'sidebar')
+
+
+    const handleRemoveAllItem = () => {
+        dispatch(removeAllItem())
+    }
 
 
     const toggleSidebar = () => {
@@ -156,8 +162,16 @@ const CartSidebar = () => {
 
 
 
-                    <div className="text-primary text-lg py-5 font-semibold">
-                        TOTAL: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}
+                    <div className="flex justify-between items-center text-primary text-lg py-5 font-semibold">
+                        <h2>
+                            TOTAL: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}
+                        </h2>
+
+                        <Button
+                            onClick={handleRemoveAllItem}
+                            className=" py-3 text-black font-semibold px-10">
+                            <div>Remove</div>
+                        </Button>
                     </div>
 
 

@@ -61,20 +61,21 @@ export const deleteCartItem = (id) => {
     // deleteItem is returning the id that i send and [TOTAL BULLSHIT]
 */
 
-export const cartStorage = (itemData) => {
-    // console.log(itemData, 'action')
-    return {
-        type: "ADD_TO_CART",
-        payload: itemData
-    }
-}
+export const cartStorage = (itemData) => ({
+    type: ActionTypes.GET_CART_ITEM,
+    payload: itemData
+})
 
 export const updateItem = (product, quantity) => ({
-    type: 'UPDATE_CART_ITEM',
+    type: ActionTypes.UPDATE_CART_ITEM,
     payload: { product, quantity },
 });
 
 export const removeItem = (productId) => ({
-    type: 'REMOVE_CART_ITEM',
+    type: ActionTypes.REMOVE_CART_ITEM,
     payload: productId,
+});
+
+export const removeAllItem = () => ({
+    type: ActionTypes.REMOVE_CART_ALL,
 });
