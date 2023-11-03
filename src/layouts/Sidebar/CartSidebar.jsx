@@ -1,15 +1,66 @@
-
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isOpenSidebar } from '../../redux/index'
+import { isOpenSidebar, cartStorage, updateItem, removeItem } from '../../redux/index'
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+
+import { useEffect, useRef } from "react";
+import useLocalStorage from '../../hooks/useLocalStorage';
+import { Dropdown, Button } from '../../components/index';
+
+
 
 
 const CartSidebar = () => {
 
     // const navigate = useNavigate(); 
-    const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen)
     const dispatch = useDispatch()
+    const reduxUpdatesLocalRef = useRef(false)
+    const localUpdatesReduxRef = useRef(false)
+
+    const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen)
+
+    const reduxCartItems = useSelector((state) => state.cartRelatedReducer.cart, shallowEqual);
+    const [localCartItems, setLocalCartItems] = useLocalStorage('cart', []);
+
+    const cartItems = reduxCartItems.length > 0 ? reduxCartItems : localCartItems;
+
+
+    useEffect(() => {
+        if (localUpdatesReduxRef.current === false) {
+            dispatch(cartStorage(localCartItems));
+            console.log('ReduxUpdated')
+        }
+
+        return () => {
+            localUpdatesReduxRef.current = true
+        }
+
+    }, [localCartItems, dispatch])
+
+
+    useEffect(() => {
+        console.log('nyako', reduxUpdatesLocalRef.current)
+        if (reduxUpdatesLocalRef.current === true) {
+            setLocalCartItems(reduxCartItems)
+            console.log('i ran')
+        }
+        return () => {
+            reduxUpdatesLocalRef.current = true
+        }
+    }, [reduxCartItems, setLocalCartItems]);
+
+
+    const updateQuantityFn = (product, quantity) => {
+        dispatch(updateItem(product, quantity));
+    }
+
+
+    const handleRemoveCartItem = (productId) => {
+        dispatch(removeItem(productId))
+    }
+    console.log(cartItems, 'sidebar')
+
 
     const toggleSidebar = () => {
         dispatch(isOpenSidebar(!isSidebarOpen))
@@ -20,37 +71,125 @@ const CartSidebar = () => {
         <>
             <div
                 className={`${isSidebarOpen ? "translate-x-0" : "translate-x-full"} 
-                bg-white fixed right-0 top-0 pb-10 h-full w-2/3 shadow-2xl transform z-50 ease-in-out duration-500 overflow-y-auto
-                sm:w-1/3 `}
+                bg-white px-9 fixed right-0 top-0 pb-10 h-screen w-full shadow-2xl transform z-50 ease-in-out duration-500
+                md:w-2/3 lg:w-[40%] xl:1/3`}
             >
-                <div
-                    className="py-2 px-6 mt-5 flex justify-end cursor-pointer rounded-md"
-                    onClick={toggleSidebar}
-                >
-                    <FontAwesomeIcon icon={faX} />
+
+                <div className=" px-6 h-[10vh] flex justify-between border-b">
+
+                    <h1 className="w-1/2 py-6 h-full">Shopping Cart ({cartItems.length})</h1>
+
+                    <div className="w-1/2 py-6 h-full inline-block text-end cursor-pointer"
+                        onClick={toggleSidebar}
+                    >
+                        <FontAwesomeIcon icon={faX} />
+                    </div>
                 </div>
 
-                <div className="w-full mt-7 px-5">
-
-                </div>
-
-                <hr className="w-full mt-5" />
-
-                <div className="mt-7 px-5 w-full flex flex-col gap-y-2">
 
 
-                </div>
+                <div className="flex flex-col">
+                    <div className="h-[60vh] overflow-auto grid grid-cols-1 gap-4">
 
-                <hr className="w-full mt-5" />
+                        {cartItems.length > 0 &&
 
-                <div className="mt-7 w-full flex flex-col gap-y-2 px-5">
+                            cartItems.map((cartItem) => (
+
+                                <div
+                                    key={cartItem.product.id}
+                                    className="bg-white p-4 border-b"
+                                >
+                                    <div className="flex flex-row items-center">
+
+
+                                        <Link to={`/products/${cartItem.product.id}`}
+                                            className="flex w-[80px] aspect-[1/1.2] items-center justify-center p-1 flex-shrink-0">
+
+                                            <img className="block aspect-square w-full object-contain transform transition-all duration-150"
+                                                src={cartItem.product.image} alt="Product"
+                                            />
+                                        </Link>
+
+
+                                        <div className="flex flex-col items-start justify-center p-4 w-full">
+
+                                            <h1 className="text-primary text-xl font-semibold text-left">
+                                                {cartItem.product.title}
+                                            </h1>
+                                            <p className="text-primary text-2xl font-bold">${cartItem.product.price}</p>
+
+
+                                            <div className="flex mt-2 gap-4 flex-wrap">
+
+                                                <div className="group bg-customGrey rounded-md px-2 hover:bg-customGrey-hover">
+                                                    <Dropdown
+                                                        onChange={(e) => updateQuantityFn(cartItem.product, parseInt(e.target.value, 10))}
+                                                        className={'bg-customGrey rounded-md p-2 group-hover:bg-customGrey-hover'}
+                                                        label={'Quantity'}
+                                                        id={cartItem.product.id}
+                                                        name={'Quantity'}
+                                                        value={cartItem.quantity}
+                                                        options={Array.from({ length: 25 }, (_, index) => ({
+                                                            value: index + 1,
+                                                            label: (index + 1).toString(),
+                                                        }))}
+                                                    />
+
+                                                </div>
+
+                                                <Button
+                                                    onClick={() => handleRemoveCartItem(cartItem.product.id)}
+                                                    className="bg-red-600 py-2 text-white px-10 rounded-md flex-shrink-0 hover:bg-red-800">
+                                                    <div>Remove</div>
+                                                </Button>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            ))}
+                    </div>
+
+
+
+
+                    <div className="text-primary text-lg py-5 font-semibold">
+                        TOTAL: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}
+                    </div>
+
+
+
+                    <div className="flex flex-col gap-6 items-center">
+
+                        <Link onClick={toggleSidebar} to={'/cart'}
+                            className="w-full text-center bg-customGrey hover:bg-customGrey-hover rounded-sm shadow-[0px_3px_5px_rgba(0,0,0,0.3)]"
+                        >
+                            <Button
+                                className=" py-3 text-black font-semibold px-10">
+                                <div>View Cart</div>
+                            </Button>
+                        </Link>
+
+                        <Link onClick={toggleSidebar} to={'/cart'}
+                            className="w-full text-center bg-blue-500 hover:bg-teal-500 rounded-sm shadow-[0px_3px_5px_rgba(0,0,0,0.3)]"
+                        >
+                            <Button
+                                className=" py-3 text-white font-semibold px-10">
+                                <div>Checkout</div>
+                            </Button>
+                        </Link>
+                    </div>
+
                 </div>
             </div>
 
 
             {isSidebarOpen && (
                 <div
-                    className="BACKGROUNDBITCH z-10 w-full fixed h-screen"
+                    className="BACKGROUND z-10 w-full fixed h-screen overflow-hidden"
                     onClick={toggleSidebar}
                 ></div>
             )}
@@ -61,18 +200,4 @@ const CartSidebar = () => {
 
 export default CartSidebar;
 
-
-
-
-// const Sidebar = () => {
-//     return (
-//         <aside className="bg-red-400 h-[100vh] w-full absolute top-0 overflow-y-auto pb-4 flex flex-col ml-1
-//         shadow-2xl transition-all duration-300 z-10 px-4 left-0
-//         md:w-[35vw] lg:px-[35px xl:max-w-[35vw]">
-//             bar
-//         </aside>
-//     )
-// }
-
-// export default Sidebar
 

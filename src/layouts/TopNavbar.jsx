@@ -10,15 +10,16 @@ const Navbar = () => {
 
     const dispatch = useDispatch()
     const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen, shallowEqual)
+    const reduxCartItems = useSelector((state) => state.cartRelatedReducer.cart, shallowEqual);
 
     const [qsearch, setQsearch] = useState('')
     const [showFullWidthSearch, setShowFullWidthSearch] = useState(false)
 
+
+
     const toggleSidebar = () => {
         dispatch(isOpenSidebar(!isSidebarOpen))
     }
-
-
 
     //bg-customGrey 
     //hover:bg-customGrey-hover
@@ -119,9 +120,13 @@ const Navbar = () => {
                     <Button
                         onClick={toggleSidebar}
                         quickCss='icon'
-                        className="hover:bg-customGrey-hover"
+                        className="hover:bg-customGrey-hover relative"
                     >
                         <FontAwesomeIcon icon={faCartShopping} />
+                        {reduxCartItems.length > 0 &&
+                            <div className='absolute flex justify-center items-center bg-red-600 aspect-square w-4 rounded-full text-white text-xs right-0 bottom-0 -translate-x-1/3 -translate-y-1/3'>{reduxCartItems.length}</div>
+                        }
+
                     </Button>
 
                     <Button

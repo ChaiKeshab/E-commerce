@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import Button from '../Button/Button'
@@ -24,6 +24,16 @@ const Carousel = ({
         })
     }
 
+    useEffect(() => {
+        const id = setInterval(() => {
+            showNextImage()
+        }, 3000)
+
+        return () => {
+            clearInterval(id)
+        }
+    }, [imageIndex])
+
     return (
 
         <div className='w-full h-full relative p-0'>
@@ -34,7 +44,7 @@ const Carousel = ({
                     <img
                         key={index}
                         src={url}
-                        className="transition-all duration-300 ease-in-out slider object-cover w-full h-full block flex-shrink-0 flex-grow-0"
+                        className="transition-all duration-300 ease-in-out slider aspect-video object-cover w-full block flex-shrink-0 flex-grow-0"
                         style={{ translate: `${-100 * imageIndex}%` }}
                     />
                 ))}
@@ -75,12 +85,3 @@ const Carousel = ({
 export default Carousel
 
 
-// useEffect(() => {
-//     const id = setInterval(() => {
-//         nextSlide()
-//     }, 3000)
-
-//     return () => {
-//         clearInterval(id)
-//     }
-// }, [currentIndex])

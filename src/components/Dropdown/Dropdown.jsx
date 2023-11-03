@@ -1,17 +1,30 @@
 /*eslint-disable */
 function Dropdown({
-    label = null,
+    label,
     id,
     name,
-    options
+    options,
+    value,
+    onChange,
+    disabled = false,
+    className
 }) {
     return (
         <>
-            <label htmlFor={id}>{label}</label>
-            <select className="bg-[#F5F5F5] border rounded-md p-2 my-1 outline-none"
-                id={id} name={name}>
-                {options.map((option) => (
-                    <option key={option.value} value={option.value}>
+            <label htmlFor={id}>
+                {label}
+            </label>
+            <select
+                id={id}
+                name={name}
+                value={value}
+                onChange={onChange}
+                className={`${className} outline-none`}
+                disabled={disabled}
+            >
+                {options.map((option, index) => (
+                    <option key={index} value={option.value}
+                        className=""                    >
                         {option.label}
                     </option>
                 ))}

@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { Home, CategorizedProducts, ProductDetails } from './pages/index'
+import { Home, CategorizedProducts, ProductDetails, Cart } from './pages/index'
 import { TopNavbar, Sidebar } from './layouts/index'
 
 const App = () => {
@@ -15,8 +15,10 @@ const App = () => {
             <Route exact path={':id'} element={<ProductDetails />} />
             <Route exact path={'category/:id'} element={<CategorizedProducts />} />
           </Route>
-        </Route>
 
+          <Route exact path='/cart' element={<Cart />} />
+
+        </Route>
       </Routes>
     </>
   )

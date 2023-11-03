@@ -3,6 +3,7 @@ const Button = ({
     quickCss,
     label,
     onClick,
+    disabled = false,
     type = 'button',
     className,
     children
@@ -15,9 +16,10 @@ const Button = ({
 
     return (
         <button
+            disabled={disabled}
             type={type}
             className={`${className} ${quickCss === 'icon' ? quickClass.icon : quickClass.default} 
-            cursor-pointer transition-all duration-150`}
+            cursor-pointer transition-all duration-150 disabled:bg-slate-300 disabled:text-black`}
             onClick={onClick}
         >
 

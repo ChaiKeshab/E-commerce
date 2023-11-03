@@ -3,6 +3,9 @@ import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { fetchAllCategory } from '../redux/index'
 import { Carousel, GridCategory, CategoryPills } from "../components/index"
 
+import { slider1, slider2, slider3 } from '../assets/index'
+import { Footer } from '../layouts/index'
+
 
 const Home = () => {
 
@@ -24,53 +27,49 @@ const Home = () => {
     }, [dispatch])
 
     const categoryImage = [
-        "https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg",
-        "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg",
-        "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg",
-        "https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"
-    ]
+        "https://media.istockphoto.com/id/166107706/photo/mobility-concept-with-digital-devices-on-laptop.jpg?s=1024x1024&w=is&k=20&c=38kZDJpBO6ExEFLl4gx3OvwErxub4k9rlSFIr-MwjwE=",
+        "https://media.istockphoto.com/id/1314987155/photo/modern-golden-bracelets-and-ring-on-white-and-blue-background-with-copy-space.jpg?s=1024x1024&w=is&k=20&c=5oessBT4lbl51Wwn03rGx-YG6LynPFz5sOfRFzh_B1A=",
+        "https://media.istockphoto.com/id/890289344/photo/the-perfect-outfit-means-a-perfect-day.jpg?s=1024x1024&w=is&k=20&c=-BsXgBv4bInxT6KYogAf5skICwHrZWKdm8ej5M3R1R8=",
+        "https://media.istockphoto.com/id/1208148708/photo/polka-dot-summer-brown-dress-suede-wedge-sandals-eco-straw-tote-bag-cosmetics-on-a-light.jpg?s=1024x1024&w=is&k=20&c=Gql7NywbC_I7RZqVDtN60i_XB9_kReFRYaoZzdpXPtc="]
 
-    const fakeCategory = [
-        "All",
-        "Gaming",
-        "Music",
-        "Travel",
-        "Vlogs",
-        "Cooking",
-        "How - To & DIY",
-        "Entertainment",
-        "Education",
-        "Technology",
-        "Comedy",
-        "Fitness & Wellness",
-        "Fashion & Beauty",
-        "News & Politics",
-        "Sports",
-        "Kids & Family",
-        "Science & Nature",
-        "Pets & Animals",
-        "Art & Creativity",
-        "Lifestyle"
-    ]
+    // const fakeCategory = [
+    //     "All",
+    //     "Gaming",
+    //     "Music",
+    //     "Travel",
+    //     "Vlogs",
+    //     "Cooking",
+    //     "How - To & DIY",
+    //     "Entertainment",
+    //     "Education",
+    //     "Technology",
+    //     "Comedy",
+    //     "Fitness & Wellness",
+    //     "Fashion & Beauty",
+    //     "News & Politics",
+    //     "Sports",
+    //     "Kids & Family",
+    //     "Science & Nature",
+    //     "Pets & Animals",
+    //     "Art & Creativity",
+    //     "Lifestyle"
+    // ]
 
-    const [selectedCategory, setSelectedCategory] = useState(fakeCategory[0])
+    // const [selectedCategory, setSelectedCategory] = useState(categoryArr[0])
 
     return (
         <div className="HOME">
             <div className=' top-0 z-10 pb-2 bg-primary'>
-                <CategoryPills
-                    category={fakeCategory}
-                    selectedCategory={selectedCategory}
-                    onSelect={setSelectedCategory} />
+
             </div>
 
-            <div className="h-[400px]">
+            <div className="h-[300px] md:h-[600px]">
                 <Carousel
-                    images={categoryImage.map(image => image)}
+                    images={[slider2, slider1, slider3]}
                 />
             </div>
 
-            <div className="grid p-4 gap-4 pt-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
+            <div className="grid mt-10 px-5 md:px-32 gap-10 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
                 {categoryArr.map((item, index) => (
                     <GridCategory
                         key={index}
@@ -81,9 +80,15 @@ const Home = () => {
 
             </div>
 
+            <Footer />
 
         </div>
     )
 }
 
 export default Home
+/* <CategoryPills
+category={categoryArr}
+selectedCategory={selectedCategory}
+onSelect={setSelectedCategory}
+/> */

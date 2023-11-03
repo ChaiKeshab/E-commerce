@@ -10,7 +10,10 @@ import {
 import {
     addCartItem,
     deleteCartItem,
-    getUserCart
+    getUserCart,
+    cartStorage,
+    updateItem,
+    removeItem
 } from './cart/action'
 
 
@@ -23,6 +26,9 @@ export {
     addCartItem,
     deleteCartItem,
     getUserCart,
+    cartStorage,
+    updateItem,
+    removeItem,
 
     isOpenSidebar,
     search

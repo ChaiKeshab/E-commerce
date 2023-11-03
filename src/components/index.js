@@ -7,6 +7,7 @@ import GridCategory from './GridItems/GridCategory'
 import Carousel from './Carousel/Carousel'
 import Spinner from './Spinner/Spinner'
 import Dropdown from './Dropdown/Dropdown'
+import UnorderedList from './UnorderedList/UnorderedList'
 
 export {
     Button,
@@ -17,5 +18,6 @@ export {
     GridProducts,
     GridCategory,
     Spinner,
-    Dropdown
+    Dropdown,
+    UnorderedList
 };

@@ -1,3 +1,95 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.text-shadow {
+    text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.onDisplay-animation {
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        /* transform: rotate(360deg) skew(0deg); */
+        opacity: 0;
+    }
+
+    10% {
+        /* transform: rotate(0deg) skew(15deg); */
+        opacity: 1;
+    }
+
+    90% {
+        /* transform: rotate(0deg) skew(0deg); */
+        opacity: 1;
+    }
+
+    100% {
+        /* transform: rotate(360deg) skew(0deg); */
+        opacity: 0;
+    }
+}
+
+
+@keyframes conquerTheUniverse {
+    0% {
+        opacity: 0;
+        transform: rotate(0deg) scale(0.2) skew(0deg);
+        background: radial-gradient(circle, #3498db, transparent);
+        filter: hue-rotate(0deg);
+        mix-blend-mode: normal;
+    }
+
+    5% {
+        opacity: 1;
+        transform: rotate(360deg) scale(1.2) skew(10deg);
+        background: radial-gradient(circle, #e74c3c, transparent);
+        filter: hue-rotate(36deg);
+        mix-blend-mode: overlay;
+    }
+
+    10% {
+        transform: rotate(720deg) scale(1.4) skew(20deg);
+        background: radial-gradient(circle, #2ecc71, transparent);
+        filter: hue-rotate(72deg);
+        mix-blend-mode: screen;
+    }
+
+    15% {
+        transform: rotate(720deg) scale(1.6) skew(30deg);
+        background: radial-gradient(circle, #f1c40f, transparent);
+        filter: hue-rotate(108deg);
+        mix-blend-mode: difference;
+    }
+
+    30% {
+        transform: rotate(720deg) scale(1.6) skew(30deg);
+        background: radial-gradient(circle, #f1c40f, transparent);
+        filter: hue-rotate(108deg);
+        mix-blend-mode: difference;
+    }
+
+    70% {
+        transform: rotate(0deg) scale(2) skew(30deg);
+        background: radial-gradient(circle, #f1c40f, transparent);
+        filter: hue-rotate(108deg);
+        mix-blend-mode: difference;
+    }
+
+    80% {
+        transform: rotate(800deg) scale(2) skew(30deg);
+        background: radial-gradient(circle, #f1c40f, transparent);
+        filter: hue-rotate(108deg);
+        mix-blend-mode: difference;
+    }
+
+    100% {
+        transform: rotate(720deg) scale(0.2) skew(45deg);
+        background: radial-gradient(circle, #9b59b6, transparent);
+        filter: hue-rotate(360deg);
+        mix-blend-mode: luminosity;
+    }
+}

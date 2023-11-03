@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+// import { FcElectronics } from 'react-icons/fc';
 /*eslint-disable */
 
 
@@ -7,22 +8,25 @@ const GridCategory = ({ category, image }) => {
     return (
         <div className="flex my-5 shadow-[0px_3px_10px_0px_rgba(0,0,0,0.5)] rounded gap-2">
 
-            <Link to={`/products/category/${category}`} className="group flex flex-col justify-between">
+            <Link to={`/products/category/${category}`} className="relative group flex w-full flex-col justify-between">
 
-                <div className=" p-5 flex flex-col gap-1 rounded-t-lg flex-grow text-sm px-5
-                bg-gradient-to-b from-slate-200 from-50% to-transparent">
+                <img
+                    src={image}
+                    className="block aspect-video w-full object-cover object-center transform transition-all duration-150
+                    "
+                    alt="product" />
+
+
+                <div className="absolute bg-[rgba(255,255,255,0.6)] text-shadow p-2 flex flex-col gap-1 flex-grow text-sm px-5
+                    top-2 left-2">
+                    {/* bg-gradient-to-b from-slate-200 from-50% to-transparent */}
 
                     <h2 className="text-xl font-semibold">{category}</h2>
                 </div>
 
-                <img
-                    src={image}
-                    className="block p-20 aspect-square w-full object-contain rounded-xl transform transition-all duration-150
-                    hover:scale-125"
-                    alt="product" />
 
-                <div className=" p-5 flex flex-col gap-1  rounded-t-lg flex-grow text-sm px-5">
-                    <p className="text-base group-hover:text-red-600 text-blue-600">See More</p>
+                <div className="absolute left-2 bottom-2 bg-[rgba(255,255,255,0.6)] p-2 flex flex-col gap-1 rounded-sm flex-grow text-sm px-5">
+                    <p className="text-base group-hover:text-red-600 text-black">See More</p>
 
                 </div>
             </Link>

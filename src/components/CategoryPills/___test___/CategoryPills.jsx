@@ -71,12 +71,12 @@ const CategoryPills = ({
                 className=' flex whitespace-nowrap p-1 gap-3 transition-transform w-max'
                 style={{ transform: `translate(-${translate}px)` }}
             >
-                {console.log(category)}
+
                 {category.map(category => (
                     <div
                         key={category}
                         className={` ${selectedCategory === category ? 'bg-secondary text-black hover:bg-white' : 'bg-customGrey hover:bg-customGrey-hover'}
-                        flex rounded-lg bg-[#E5E5E5] flex-col justify-center shadow-inner items-center w-40 space-y-5 p-8`}>
+                    flex rounded-lg bg-[#E5E5E5] flex-col justify-center shadow-inner items-center w-40 space-y-5 p-8`}>
 
                         <AiFillHome className='text-2xl' />
                         <Button
