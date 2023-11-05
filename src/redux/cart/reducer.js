@@ -57,6 +57,12 @@ const cartReducer = (state = initialState, action) => {
             }
 
 
+
+
+
+
+
+
         case ActionTypes.ADD_CART_LOADING:
         case ActionTypes.DELETE_CART_LOADING:
         case ActionTypes.GET_CART_LOADING:

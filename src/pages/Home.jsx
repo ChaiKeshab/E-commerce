@@ -1,7 +1,8 @@
-import { useEffect, useState, useRef } from "react"
+import React from "react"
+import { useEffect, useRef } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { fetchAllCategory } from '../redux/index'
-import { Carousel, GridCategory, CategoryPills } from "../components/index"
+import { Carousel, GridCategory, HomeSkeleton } from "../components/index"
 
 import { slider1, slider2, slider3 } from '../assets/index'
 import { Footer } from '../layouts/index'
@@ -13,7 +14,9 @@ const Home = () => {
     const apiCallRef = useRef(false)
 
     const categoryArr = useSelector((state) => state.productRelatedReducer.allCategory, shallowEqual)
+    const categoryLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
 
+    console.log(categoryLoading)
     useEffect(() => {
         // preventing double api call.
         if (apiCallRef.current === false) {
@@ -71,11 +74,15 @@ const Home = () => {
 
             <div className="grid mt-10 px-5 md:px-32 gap-10 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
                 {categoryArr.map((item, index) => (
-                    <GridCategory
-                        key={index}
-                        category={item}
-                        image={categoryImage[index]}
-                    />
+
+                    <React.Fragment key={index}>
+                        {categoryLoading ? <HomeSkeleton /> : (
+                            <GridCategory
+                                category={item}
+                                image={categoryImage[index]}
+                            />
+                        )}
+                    </React.Fragment>
                 ))}
 
             </div>
@@ -87,8 +94,3 @@ const Home = () => {
 }
 
 export default Home
-/* <CategoryPills
-category={categoryArr}
-selectedCategory={selectedCategory}
-onSelect={setSelectedCategory}
-/> */

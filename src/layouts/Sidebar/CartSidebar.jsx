@@ -169,8 +169,8 @@ const CartSidebar = () => {
 
                         <Button
                             onClick={handleRemoveAllItem}
-                            className=" py-3 text-black font-semibold px-10">
-                            <div>Remove</div>
+                            className="bg-red-600 py-2 text-white px-10 rounded-md flex-shrink-0 hover:bg-red-800">
+                            <div>Remove All</div>
                         </Button>
                     </div>
 

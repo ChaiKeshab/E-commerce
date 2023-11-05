@@ -8,6 +8,9 @@ import Carousel from './Carousel/Carousel'
 import Spinner from './Spinner/Spinner'
 import Dropdown from './Dropdown/Dropdown'
 import UnorderedList from './UnorderedList/UnorderedList'
+import HomeSkeleton from './Skeleton/HomeSkeleton'
+import CategorizedSkeleton from './Skeleton/CategorizedSkeleton'
+import ProductDetailsSkeleton from './Skeleton/ProductDetailsSkeleton'
 
 export {
     Button,
@@ -19,5 +22,8 @@ export {
     GridCategory,
     Spinner,
     Dropdown,
-    UnorderedList
+    UnorderedList,
+    HomeSkeleton,
+    CategorizedSkeleton,
+    ProductDetailsSkeleton
 };

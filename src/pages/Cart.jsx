@@ -138,20 +138,24 @@ const Cart = () => {
 
 
                 {cartItems.length > 0 &&
-                    <div className="flex flex-col flex-grow px-5">
+                    <div className="flex bg-customGrey gap-5 rounded-xl h-fit ml-5 flex-col items-start justify-start flex-grow p-5">
+
+                        <div className="text-primary text-2xl font-semibold">
+                            Total: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}
+                        </div>
 
                         <Button
                             onClick={handleRemoveAllItem}
-                            className=" py-3 text-black font-semibold px-10">
-                            <div>Remove</div>
+                            className="bg-blue-500 py-2 w-[60%] text-white px-10 rounded-md flex-shrink-0 hover:bg-teal-500">
+                            <div>Checkout</div>
                         </Button>
 
-                        {cartItems.length > 0 && (
-                            <div className="text-primary text-2xl font-semibold">
-                                Total: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}
-                            </div>
-                        )}
-                        <div className="Checkout flex lg:w-1/3">Checkout</div>
+                        {/* <Button
+                            onClick={handleRemoveAllItem}
+                            className="bg-red-600 py-2 text-white px-10 rounded-md flex-shrink-0 hover:bg-red-800">
+                            <div>Remove All</div>
+                        </Button> */}
+
                     </div>
                 }
 

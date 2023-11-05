@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { useParams } from "react-router-dom"
-import { Spinner, Button, Dropdown } from '../components/index'
+import { Button, Dropdown, ProductDetailsSkeleton } from '../components/index'
 import {
     fetchSpecificProduct,
     cartStorage,
@@ -74,7 +74,6 @@ const ProductDetails = () => {
     useEffect(() => {
         if (localUpdatesReduxRef.current === false) {
             dispatch(cartStorage(localCartItems));
-            console.log('p redux updated', localCartItems,)
         }
 
         return () => {
@@ -114,72 +113,75 @@ const ProductDetails = () => {
 
 
     return (
+        <>
+            {specificProductLoading ? <ProductDetailsSkeleton /> : (
 
-        <div className="product-page">
+                <div className="product-page">
+                    <div className="h-full flex flex-col items-center justify-center 
+                        md:flex-row">
 
-            <div className="h-full flex flex-col items-center justify-center 
-            md:flex-row">
+                        <div className="flex w-[400px] aspect-[1/1.2] items-center justify-center p-4
+                            md:w-[600px]">
 
-                <div className="flex w-[400px] aspect-[1/1.2] items-center justify-center p-4
-                md:w-[600px]">
-
-                    {specificProductLoading ?
-                        <div className="flex items-center justify-center ">
-                            <Spinner className='block w-40 h-40' />
-                        </div>
-
-                        : (<img className="block p-5 aspect-square w-full object-contain transform transition-all duration-150"
-                            src={image} alt="Product" />)}
-                </div>
-
-                <div className="p-4 md:w-full">
-
-                    <div className="my-4">
-                        <h1 className="text-2xl font-semibold mb-2">{title}</h1>
-                        <p className="text-gray-600">{category}</p>
-                        <p className="text-2xl text-blue-500 font-bold mt-2">${price}</p>
-                        <p className="mt-2">{description}</p>
-                    </div>
-
-                    <div className="relative flex gap-4 flex-wrap items-center justify-start">
-
-                        <div className="group w-fit flex-shrink-0 bg-customGrey rounded-full px-4 shadow-[0px_3px_5px_rgba(0,0,0,0.3)] hover:bg-customGrey-hover">
-                            <Dropdown
-                                disabled={isCartItemAdded ? true : false}
-                                onChange={(e) => setQuantityAmount(parseInt(e.target.value, 10))} //10: radix/base 10(decimal)
-                                className={'bg-customGrey rounded-md p-2 group-hover:bg-customGrey-hover'}
-                                label={'Quantity'}
-                                id={specificProductObj.id}
-                                name={'Quantity'}
-                                value={quantityAmount}
-                                options={Array.from({ length: 25 }, (_, index) => ({
-                                    value: index + 1,
-                                    label: (index + 1).toString(),
-                                }))}
+                            <img className="block p-5 aspect-square w-full object-contain transform transition-all duration-150"
+                                src={image} alt="Product"
                             />
+
                         </div>
 
-                        <Button
-                            disabled={isCartItemAdded ? true : false}
-                            onClick={() => handleAddToCart(specificProductObj, quantityAmount)}
-                            className="bg-blue-500 text-white px-10 py-2 rounded-full shadow-[0px_3px_5px_rgba(0,0,0,0.3)] hover:bg-teal-500 flex-shrink-0">
-                            <div>Add to Cart</div>
-                        </Button>
+                        {/* <div className="flex items-center justify-center ">
+                            <ProductDetailsSkeleton />
+                        </div> */}
 
-                        {isCartItemAdded &&
-                            <div
-                                className="onDisplay-animation bg-green-500 text-white px-10 py-2 rounded-full shadow-[0px_3px_5px_rgba(0,0,0,0.3)
+                        <div className="p-4 md:w-full">
+
+                            <div className="my-4">
+                                <h1 className="text-2xl font-semibold mb-2">{title}</h1>
+                                <p className="text-gray-600">{category}</p>
+                                <p className="text-2xl text-blue-500 font-bold mt-2">${price}</p>
+                                <p className="mt-2">{description}</p>
+                            </div>
+
+                            <div className="relative flex gap-4 flex-wrap items-center justify-start">
+
+                                <div className="group w-fit flex-shrink-0 bg-customGrey rounded-full px-4 shadow-[0px_3px_5px_rgba(0,0,0,0.3)] hover:bg-customGrey-hover">
+                                    <Dropdown
+                                        disabled={isCartItemAdded ? true : false}
+                                        onChange={(e) => setQuantityAmount(parseInt(e.target.value, 10))} //10: radix/base 10(decimal)
+                                        className={'bg-customGrey rounded-md p-2 group-hover:bg-customGrey-hover'}
+                                        label={'Quantity'}
+                                        id={specificProductObj.id}
+                                        name={'Quantity'}
+                                        value={quantityAmount}
+                                        options={Array.from({ length: 25 }, (_, index) => ({
+                                            value: index + 1,
+                                            label: (index + 1).toString(),
+                                        }))}
+                                    />
+                                </div>
+
+                                <Button
+                                    disabled={isCartItemAdded ? true : false}
+                                    onClick={() => handleAddToCart(specificProductObj, quantityAmount)}
+                                    className="bg-blue-500 text-white px-10 py-2 rounded-full shadow-[0px_3px_5px_rgba(0,0,0,0.3)] hover:bg-teal-500 flex-shrink-0">
+                                    <div>Add to Cart</div>
+                                </Button>
+
+                                {isCartItemAdded &&
+                                    <div
+                                        className="onDisplay-animation bg-green-500 text-white px-10 py-2 rounded-full shadow-[0px_3px_5px_rgba(0,0,0,0.3)
                                     absolute bottom-0 left-0 translate-y-[130%]"
-                            >
-                                {isCartItemAdded}
-                            </div>}
+                                    >
+                                        {isCartItemAdded}
+                                    </div>}
+                            </div>
+
+                        </div>
                     </div>
 
                 </div>
-            </div>
-
-        </div>
-
+            )}
+        </>
     )
 }
 

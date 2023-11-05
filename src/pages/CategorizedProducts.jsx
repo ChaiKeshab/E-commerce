@@ -1,7 +1,7 @@
-import { useEffect, useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
 import { fetchSpecificCategory } from '../redux/index'
-import { GridProducts } from "../components/index"
+import { GridProducts, CategorizedSkeleton } from "../components/index"
 import { useOutletContext, useParams } from "react-router-dom"
 
 
@@ -36,11 +36,16 @@ const Products = () => {
             <p>{outletObj.qsearch}</p>
             <div className="grid p-4 gap-4 pt-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
                 {specificCategoryArr.map(item => (
-                    <GridProducts
-                        key={item.id}
-                        {...item}
-                        loading={specificCategoryLoading}
-                    />
+                    <React.Fragment key={item.id}>
+                        {specificCategoryLoading ? <CategorizedSkeleton /> : (
+
+                            <GridProducts
+                                {...item}
+                                loading={specificCategoryLoading}
+                            />
+
+                        )}
+                    </React.Fragment>
                 ))}
 
             </div>
