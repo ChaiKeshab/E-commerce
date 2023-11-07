@@ -5,7 +5,8 @@ import { Button, Dropdown, ProductDetailsSkeleton } from '../components/index'
 import {
     fetchSpecificProduct,
     cartStorage,
-    updateItem
+    updateItem,
+    cleanUpSpecificProduct
 } from '../redux/index'
 
 import useLocalStorage from '../hooks/useLocalStorage'
@@ -28,29 +29,12 @@ const ProductDetails = () => {
 
     const [localCartItems, setLocalCartItems] = useLocalStorage('cart', [])
 
-    const { image, title, category, price, description } = specificProductObj
+    if (specificProductObj) { var { image, title, category, price, description } = specificProductObj }
 
     const cartItems = reduxCartItems.length > 0 ? reduxCartItems : localCartItems;
 
     const [isCartItemAdded, setisCartItemAdded] = useState('')
 
-
-    // update quantity when changed on other pages
-    // const updateQuantity = cartItems
-    //     .filter((item) => item.product.id === specificProductObj.id)
-    //     .map(item => item.quantity)
-
-    // console.log(updateQuantity)
-
-
-
-    // const initialQuantity = () => {
-    //     const finding = cartItems.map(item =>{
-    //         if (item.product.id === specificProductObj.product.id){
-
-    //         }
-    //     })
-    // }
 
     const [quantityAmount, setQuantityAmount] = useState(1)
 
@@ -58,11 +42,10 @@ const ProductDetails = () => {
 
 
     //API CALL
+    console.log(id, 'product')
     useEffect(() => {
-        // preventing double api call.
-        if (apiCallRef.current === false) {
-            dispatch(fetchSpecificProduct(id))
-        }
+        dispatch(fetchSpecificProduct(id))
+        console.log('yolo')
         return () => {
             apiCallRef.current = true
         }
@@ -70,27 +53,24 @@ const ProductDetails = () => {
 
 
 
+
+
+
+
+
     //UPDATING REDUX CART THROUGH LOCAL STORAGE ON PAGE RELOAD
     useEffect(() => {
-        if (localUpdatesReduxRef.current === false) {
-            dispatch(cartStorage(localCartItems));
-        }
+        if (localUpdatesReduxRef.current === false) dispatch(cartStorage(localCartItems))
 
-        return () => {
-            localUpdatesReduxRef.current = true
-        }
+        return () => localUpdatesReduxRef.current = true
 
     }, [localCartItems, dispatch])
 
 
     useEffect(() => {
-        if (reduxUpdatesLocalRef.current === true) {
-            setLocalCartItems(reduxCartItems);
-        }
+        if (reduxUpdatesLocalRef.current === true) setLocalCartItems(reduxCartItems)
 
-        return () => {
-            reduxUpdatesLocalRef.current = true
-        }
+        return () => reduxUpdatesLocalRef.current = true
 
     }, [setLocalCartItems, reduxCartItems]);
 

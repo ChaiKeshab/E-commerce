@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { isOpenSidebar, cartStorage, updateItem, removeItem, removeAllItem } from '../../redux/index'
+import { isOpenSidebarCart, cartStorage, updateItem, removeItem, removeAllItem } from '../../redux/index'
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 
 import { useEffect, useRef } from "react";
@@ -12,13 +12,12 @@ import { Dropdown, Button } from '../../components/index';
 
 
 const CartSidebar = () => {
-
     // const navigate = useNavigate(); 
     const dispatch = useDispatch()
     const reduxUpdatesLocalRef = useRef(false)
     const localUpdatesReduxRef = useRef(false)
 
-    const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen)
+    const isSidebarOpenCart = useSelector(state => state.sidebarRelatedReducer.isOpenCart, shallowEqual)
 
     const reduxCartItems = useSelector((state) => state.cartRelatedReducer.cart, shallowEqual);
     const [localCartItems, setLocalCartItems] = useLocalStorage('cart', []);
@@ -69,14 +68,14 @@ const CartSidebar = () => {
 
 
     const toggleSidebar = () => {
-        dispatch(isOpenSidebar(!isSidebarOpen))
+        dispatch(isOpenSidebarCart(!isSidebarOpenCart))
     }
 
 
     return (
         <>
             <div
-                className={`${isSidebarOpen ? "translate-x-0" : "translate-x-full"} 
+                className={`${isSidebarOpenCart ? "translate-x-0" : "translate-x-full"} 
                 bg-white px-9 fixed right-0 top-0 pb-10 h-screen w-full shadow-2xl transform z-50 ease-in-out duration-500
                 md:w-2/3 lg:w-[40%] xl:1/3`}
             >
@@ -86,7 +85,7 @@ const CartSidebar = () => {
                     <h1 className="w-1/2 py-6 h-full">Shopping Cart ({cartItems.length})</h1>
 
                     <div className="w-1/2 py-6 h-full inline-block text-end cursor-pointer"
-                        onClick={toggleSidebar}
+                        onClick={(toggleSidebar)}
                     >
                         <FontAwesomeIcon icon={faX} />
                     </div>
@@ -201,7 +200,7 @@ const CartSidebar = () => {
             </div>
 
 
-            {isSidebarOpen && (
+            {isSidebarOpenCart && (
                 <div
                     className="BACKGROUND z-10 w-full fixed h-screen overflow-hidden"
                     onClick={toggleSidebar}

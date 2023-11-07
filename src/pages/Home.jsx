@@ -1,8 +1,8 @@
 import React from "react"
 import { useEffect, useRef } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
-import { fetchAllCategory } from '../redux/index'
-import { Carousel, GridCategory, HomeSkeleton } from "../components/index"
+import { fetchAllCategory, cleanUpAllCategory } from '../redux/index'
+import { Carousel2, GridCategory, HomeSkeleton } from "../components/index"
 
 import { slider1, slider2, slider3 } from '../assets/index'
 import { Footer } from '../layouts/index'
@@ -16,18 +16,23 @@ const Home = () => {
     const categoryArr = useSelector((state) => state.productRelatedReducer.allCategory, shallowEqual)
     const categoryLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
 
-    console.log(categoryLoading)
+    // useEffect(() => {
+    //     dispatch(fetchAllCategory())
+
+    //     return () => {
+    // dispatch(cleanUpAllCategory())
+    //     }
+    // }, [])
+
     useEffect(() => {
-        // preventing double api call.
-        if (apiCallRef.current === false) {
-            dispatch(fetchAllCategory())
-        }
+        dispatch(fetchAllCategory())
 
         return () => {
-            apiCallRef.current = true
+            dispatch(cleanUpAllCategory())
         }
 
     }, [dispatch])
+
 
     const categoryImage = [
         "https://media.istockphoto.com/id/166107706/photo/mobility-concept-with-digital-devices-on-laptop.jpg?s=1024x1024&w=is&k=20&c=38kZDJpBO6ExEFLl4gx3OvwErxub4k9rlSFIr-MwjwE=",
@@ -35,30 +40,6 @@ const Home = () => {
         "https://media.istockphoto.com/id/890289344/photo/the-perfect-outfit-means-a-perfect-day.jpg?s=1024x1024&w=is&k=20&c=-BsXgBv4bInxT6KYogAf5skICwHrZWKdm8ej5M3R1R8=",
         "https://media.istockphoto.com/id/1208148708/photo/polka-dot-summer-brown-dress-suede-wedge-sandals-eco-straw-tote-bag-cosmetics-on-a-light.jpg?s=1024x1024&w=is&k=20&c=Gql7NywbC_I7RZqVDtN60i_XB9_kReFRYaoZzdpXPtc="]
 
-    // const fakeCategory = [
-    //     "All",
-    //     "Gaming",
-    //     "Music",
-    //     "Travel",
-    //     "Vlogs",
-    //     "Cooking",
-    //     "How - To & DIY",
-    //     "Entertainment",
-    //     "Education",
-    //     "Technology",
-    //     "Comedy",
-    //     "Fitness & Wellness",
-    //     "Fashion & Beauty",
-    //     "News & Politics",
-    //     "Sports",
-    //     "Kids & Family",
-    //     "Science & Nature",
-    //     "Pets & Animals",
-    //     "Art & Creativity",
-    //     "Lifestyle"
-    // ]
-
-    // const [selectedCategory, setSelectedCategory] = useState(categoryArr[0])
 
     return (
         <div className="HOME">
@@ -66,25 +47,31 @@ const Home = () => {
 
             </div>
 
-            <div className="h-[300px] md:h-[600px]">
+            {/* <div className="h-[300px] md:h-[600px]">
                 <Carousel
+                    images={[slider2, slider1, slider3]}
+                />
+            </div> */}
+
+            <div className="w-full">
+                <Carousel2
                     images={[slider2, slider1, slider3]}
                 />
             </div>
 
             <div className="grid mt-10 px-5 md:px-32 gap-10 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-                {categoryArr.map((item, index) => (
+                {categoryLoading ? <HomeSkeleton /> : (
+                    categoryArr.map((item, index) => (
 
-                    <React.Fragment key={index}>
-                        {categoryLoading ? <HomeSkeleton /> : (
+                        <React.Fragment key={index}>
                             <GridCategory
                                 category={item}
                                 image={categoryImage[index]}
                             />
-                        )}
-                    </React.Fragment>
-                ))}
+                        </React.Fragment>
+                    ))
 
+                )}
             </div>
 
             <Footer />

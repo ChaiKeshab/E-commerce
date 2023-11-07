@@ -5,6 +5,7 @@ import CategoryPills from './CategoryPills/CategoryPills'
 import GridProducts from './GridItems/GridProducts'
 import GridCategory from './GridItems/GridCategory'
 import Carousel from './Carousel/Carousel'
+import Carousel2 from './Carousel/Carousel2'
 import Spinner from './Spinner/Spinner'
 import Dropdown from './Dropdown/Dropdown'
 import UnorderedList from './UnorderedList/UnorderedList'
@@ -25,5 +26,7 @@ export {
     UnorderedList,
     HomeSkeleton,
     CategorizedSkeleton,
-    ProductDetailsSkeleton
+    ProductDetailsSkeleton,
+
+    Carousel2
 };

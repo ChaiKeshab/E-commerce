@@ -1,13 +1,17 @@
 import { Routes, Route } from 'react-router-dom'
 import { Home, CategorizedProducts, ProductDetails, Cart } from './pages/index'
-import { TopNavbar, Sidebar } from './layouts/index'
+import { TopNavbar, CartSidebar, CategorySidebar } from './layouts/index'
 
 const App = () => {
   return (
     <>
-      <Sidebar />
-      <Routes>
-        <Route element={<TopNavbar />}>
+      <CartSidebar />
+      <CategorySidebar />
+      <TopNavbar />
+
+      <div className='mt-24'>
+
+        <Routes>
           <Route exact path='/' element={<Home />} />
 
           <Route exact path={'/products'}>
@@ -18,8 +22,8 @@ const App = () => {
 
           <Route exact path='/cart' element={<Cart />} />
 
-        </Route>
-      </Routes>
+        </Routes>
+      </div>
     </>
   )
 }

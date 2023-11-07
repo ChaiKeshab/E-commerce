@@ -11,6 +11,8 @@ const initialState = {
 
 const productReducer = (state = initialState, action) => {
     switch (action.type) {
+
+
         case ActionTypes.FETCH_CATEGORY_LOADING:
         case ActionTypes.FETCH_PRODUCTS_LOADING:
         case ActionTypes.FETCH_SPECIFIC_CATEGORY_LOADING:
@@ -21,12 +23,16 @@ const productReducer = (state = initialState, action) => {
                 error: null,
             };
 
+
+
+
         case ActionTypes.FETCH_CATEGORY_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 allCategory: action.payload,
             };
+
 
         case ActionTypes.FETCH_CATEGORY_ERROR:
             return {
@@ -35,12 +41,27 @@ const productReducer = (state = initialState, action) => {
                 error: action.payload,
             };
 
+
+
+
+
         case ActionTypes.FETCH_PRODUCTS_SUCCESS:
             return {
                 ...state,
                 loading: false,
                 allProducts: action.payload,
             };
+
+        case ActionTypes.FETCH_PRODUCTS_ERROR:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+
+
+
+
 
         case ActionTypes.FETCH_SPECIFIC_CATEGORY_SUCCESS:
             return {
@@ -56,6 +77,10 @@ const productReducer = (state = initialState, action) => {
                 error: action.payload,
             };
 
+
+
+
+
         case ActionTypes.FETCH_SPECIFIC_PRODUCTS_SUCCESS:
             return {
                 ...state,
@@ -69,6 +94,40 @@ const productReducer = (state = initialState, action) => {
                 loading: false,
                 error: action.payload,
             };
+
+
+
+
+        // CLEAN-UP
+        case ActionTypes.CLEANUP_PRODUCTS_DATA:
+            return {
+                allProducts: [],
+                loading: false,
+                error: null,
+            }
+
+        case ActionTypes.CLEANUP_SPECIFIC_PRODUCTS_DATA:
+            return {
+                specificProducts: [],
+                loading: false,
+                error: null,
+            }
+
+        case ActionTypes.CLEANUP_CATEGORY_DATA:
+            return {
+                allCategory: [],
+                loading: false,
+                error: null,
+            }
+
+
+        case ActionTypes.CLEANUP_SPECIFIC_CATEGORY_DATA:
+            return {
+                specificCategory: [],
+                loading: false,
+                error: null,
+            }
+
 
         default:
             return state;

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useSelector, useDispatch, shallowEqual } from "react-redux"
-import { fetchSpecificCategory } from '../redux/index'
+import { fetchSpecificCategory, cleanUpSpecificCategory } from '../redux/index'
 import { GridProducts, CategorizedSkeleton } from "../components/index"
 import { useOutletContext, useParams } from "react-router-dom"
 
@@ -9,45 +9,42 @@ const Products = () => {
 
     const dispatch = useDispatch()
     const apiCallRef = useRef(false)
+    const subsequentApiCallRef = useRef(false)
     const { id } = useParams()
-    const outletObj = useOutletContext()
+    // const outletObj = useOutletContext()
 
 
     const specificCategoryArr = useSelector((state) => state.productRelatedReducer.specificCategory, shallowEqual)
     const specificCategoryLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
-
+    console.log(specificCategoryArr, 'specCatArr')
 
     useEffect(() => {
+        console.log('specUseCatArr', id)
         // preventing double api call.
-        if (apiCallRef.current === false) {
-            dispatch(fetchSpecificCategory(id))
-        }
+        dispatch(fetchSpecificCategory(id))
 
         return () => {
-            apiCallRef.current = true
+            dispatch(cleanUpSpecificCategory())
         }
 
     }, [dispatch, id])
 
 
     return (
-        <div className="HOME pt-5">
+        <div className="Category pt-5">
 
-            <p>{outletObj.qsearch}</p>
             <div className="grid p-4 gap-4 pt-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-                {specificCategoryArr.map(item => (
-                    <React.Fragment key={item.id}>
-                        {specificCategoryLoading ? <CategorizedSkeleton /> : (
+                {specificCategoryLoading ? <CategorizedSkeleton /> : (
 
-                            <GridProducts
-                                {...item}
-                                loading={specificCategoryLoading}
-                            />
+                    specificCategoryArr.map(item => (
 
-                        )}
-                    </React.Fragment>
-                ))}
-
+                        <GridProducts
+                            key={item.id}
+                            {...item}
+                            loading={specificCategoryLoading}
+                        />
+                    ))
+                )}
             </div>
 
 

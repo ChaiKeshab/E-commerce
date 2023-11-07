@@ -1,25 +1,23 @@
 import { useState } from 'react'
 import { Button, Input } from '../components'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faBars, faBell, faUser, faArrowLeft, faCartShopping } from '@fortawesome/free-solid-svg-icons'
-import { isOpenSidebar } from '../redux/index'
+import { isOpenSidebarCart, isOpenSidebarCategory, isOpenSidebarNotification } from '../redux/index'
 
 const Navbar = () => {
 
     const dispatch = useDispatch()
-    const isSidebarOpen = useSelector(state => state.sidebarRelatedReducer.isOpen, shallowEqual)
+    const isSidebarOpenCart = useSelector(state => state.sidebarRelatedReducer.isOpenCart, shallowEqual)
+    const isSidebarOpenCategory = useSelector(state => state.sidebarRelatedReducer.isOpenCategory, shallowEqual)
+    const isSidebarOpenNotification = useSelector(state => state.sidebarRelatedReducer.isOpenCartNotification, shallowEqual)
     const reduxCartItems = useSelector((state) => state.cartRelatedReducer.cart, shallowEqual);
 
     const [qsearch, setQsearch] = useState('')
     const [showFullWidthSearch, setShowFullWidthSearch] = useState(false)
 
 
-
-    const toggleSidebar = () => {
-        dispatch(isOpenSidebar(!isSidebarOpen))
-    }
 
     //bg-customGrey 
     //hover:bg-customGrey-hover
@@ -30,15 +28,15 @@ const Navbar = () => {
 
     return (
         <>
-            <nav className='flex gap-10 justify-between pt-2 pb-3 mx-4
-        lg:gap-20'>
+            <nav className='z-10 m-0 bg-customGrey fixed top-0 w-full flex h-24 gap-10 items-center justify-between px-4
+            lg:gap-20'>
 
 
                 <div className={`${showFullWidthSearch ? 'hidden' : 'flex'} 
-            gap-4 items-center flex-shrink-0`}>
+                gap-4 items-center flex-shrink-0`}>
 
                     <Button
-                        onClick={toggleSidebar}
+                        onClick={() => dispatch(isOpenSidebarCategory(!isSidebarOpenCategory))}
                         className="HAMBURG hover:bg-customGrey-hover"
                         quickCss='icon'
                     >
@@ -118,7 +116,7 @@ const Navbar = () => {
                 </Button> */}
 
                     <Button
-                        onClick={toggleSidebar}
+                        onClick={() => dispatch(isOpenSidebarCart(!isSidebarOpenCart))}
                         quickCss='icon'
                         className="hover:bg-customGrey-hover relative"
                     >
@@ -129,7 +127,8 @@ const Navbar = () => {
 
                     </Button>
 
-                    <Button
+                    <Button isSidebarOpenNotification
+                        onClick={() => dispatch(isOpenSidebarNotification(!isSidebarOpenNotification))}
                         quickCss='icon'
                         className="hover:bg-customGrey-hover"
                     >
@@ -146,7 +145,7 @@ const Navbar = () => {
                 </div>
             </nav>
 
-            <Outlet context={{ qsearch }} />
+            {/* <Outlet context={{ qsearch }} /> */}
         </>
     )
 }

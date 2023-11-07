@@ -1,9 +1,11 @@
 import TopNavbar from './TopNavbar'
-import Sidebar from './Sidebar/CartSidebar'
+import CartSidebar from './Sidebar/CartSidebar'
+import CategorySidebar from './Sidebar/CategorySidebar'
 import Footer from './Footer'
 
 export {
   TopNavbar,
-  Sidebar,
+  CartSidebar,
+  CategorySidebar,
   Footer
 }

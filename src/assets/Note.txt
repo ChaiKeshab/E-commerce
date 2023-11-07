@@ -1,0 +1,3 @@
+Under strict mode -
+
+

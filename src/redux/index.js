@@ -1,10 +1,19 @@
-import { isOpenSidebar } from './sidebar/action'
+import {
+    isOpenSidebarCart,
+    isOpenSidebarCategory,
+    isOpenSidebarNotification
+} from './sidebar/action'
+
 import { search } from './search/action'
 import {
     fetchAllCategory,
     fetchAllProduct,
     fetchSpecificCategory,
-    fetchSpecificProduct
+    fetchSpecificProduct,
+    cleanUpAllCategory,
+    cleanUpAllProduct,
+    cleanUpSpecificCategory,
+    cleanUpSpecificProduct
 } from './products/action'
 
 import {
@@ -23,6 +32,10 @@ export {
     fetchSpecificProduct,
     fetchAllCategory,
     fetchSpecificCategory,
+    cleanUpAllCategory,
+    cleanUpAllProduct,
+    cleanUpSpecificCategory,
+    cleanUpSpecificProduct,
 
     addCartItem,
     deleteCartItem,
@@ -32,6 +45,9 @@ export {
     removeItem,
     removeAllItem,
 
-    isOpenSidebar,
+    isOpenSidebarCart,
+    isOpenSidebarCategory,
+    isOpenSidebarNotification,
+
     search
 }

@@ -14,6 +14,7 @@ const Cart = () => {
 
     const cartItems = reduxCartItems.length > 0 ? reduxCartItems : localCartItems;
 
+
     // Runs only on page reload to update redux from local
     useEffect(() => {
         if (localUpdatesReduxRef.current === false) {
@@ -25,8 +26,6 @@ const Cart = () => {
         }
 
     }, [localCartItems, dispatch])
-
-
 
     useEffect(() => {
         if (reduxUpdatesLocalRef.current === true) {
@@ -56,9 +55,9 @@ const Cart = () => {
 
 
     return (
-        <div className="mx-auto mb-5 md:p-7 lg:h-screen">
+        <div className="mx-auto mb-5 md:p-7 md:px-16 lg:h-screen">
 
-            <h1 className="text-4xl h-[10vh] font-semibold">Shopping Cart</h1>
+            <h1 className="text-4xl h-[10vh] font-semibold">Shopping Cart ({cartItems.length})</h1>
 
             <div className="flex flex-col lg:flex-row">
 
@@ -138,15 +137,14 @@ const Cart = () => {
 
 
                 {cartItems.length > 0 &&
-                    <div className="flex bg-customGrey gap-5 rounded-xl h-fit ml-5 flex-col items-start justify-start flex-grow p-5">
+                    <div className="flex gap-5 rounded-xl h-fit  flex-col items-start justify-start flex-grow p-5 ml-36 ">
 
                         <div className="text-primary text-2xl font-semibold">
                             Total: ${cartItems.reduce((acc, item) => (acc + item.product.price * item.quantity), 0).toFixed(2)}
                         </div>
 
                         <Button
-                            onClick={handleRemoveAllItem}
-                            className="bg-blue-500 py-2 w-[60%] text-white px-10 rounded-md flex-shrink-0 hover:bg-teal-500">
+                            className="bg-blue-500 py-2 w-full text-white px-10 flex-shrink-0 hover:bg-teal-500">
                             <div>Checkout</div>
                         </Button>
 
