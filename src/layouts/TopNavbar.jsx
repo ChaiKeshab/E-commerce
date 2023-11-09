@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button, Input } from '../components'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -17,19 +17,34 @@ const Navbar = () => {
     const [qsearch, setQsearch] = useState('')
     const [showFullWidthSearch, setShowFullWidthSearch] = useState(false)
 
+    const [isScrolling, setIsScrolling] = useState(false)
 
 
-    //bg-customGrey 
-    //hover:bg-customGrey-hover
     const handleSubmit = (e) => {
         e.preventDefault()
         console.log('searchSubmit')
     }
 
+    useEffect(() => {
+        const handleScroll = () => {
+            if (window.scrollY > 0) {
+                setIsScrolling(true);
+            } else {
+                setIsScrolling(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    }, [isScrolling])
+
+
     return (
         <>
-            <nav className='z-10 m-0 bg-customGrey fixed top-0 w-full flex h-24 gap-10 items-center justify-between px-4
-            lg:gap-20'>
+            <nav className={`${isScrolling ? 'shadow-lg' : 'shadow-sm'} z-10 m-0 bg-customGrey fixed top-0 w-full flex h-24 gap-10 items-center justify-between px-4
+            lg:gap-20`}>
 
 
                 <div className={`${showFullWidthSearch ? 'hidden' : 'flex'} 

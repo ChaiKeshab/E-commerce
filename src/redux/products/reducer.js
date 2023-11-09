@@ -101,6 +101,7 @@ const productReducer = (state = initialState, action) => {
         // CLEAN-UP
         case ActionTypes.CLEANUP_PRODUCTS_DATA:
             return {
+                ...state,
                 allProducts: [],
                 loading: false,
                 error: null,
@@ -108,6 +109,7 @@ const productReducer = (state = initialState, action) => {
 
         case ActionTypes.CLEANUP_SPECIFIC_PRODUCTS_DATA:
             return {
+                ...state,
                 specificProducts: [],
                 loading: false,
                 error: null,
@@ -115,6 +117,7 @@ const productReducer = (state = initialState, action) => {
 
         case ActionTypes.CLEANUP_CATEGORY_DATA:
             return {
+                ...state,
                 allCategory: [],
                 loading: false,
                 error: null,
@@ -123,6 +126,7 @@ const productReducer = (state = initialState, action) => {
 
         case ActionTypes.CLEANUP_SPECIFIC_CATEGORY_DATA:
             return {
+                ...state,
                 specificCategory: [],
                 loading: false,
                 error: null,

@@ -15,7 +15,6 @@ const App = () => {
           <Route exact path='/' element={<Home />} />
 
           <Route exact path={'/products'}>
-            {/* <Route index element={<Products />} /> */}
             <Route exact path={':id'} element={<ProductDetails />} />
             <Route exact path={'category/:id'} element={<CategorizedProducts />} />
           </Route>
@@ -27,5 +26,7 @@ const App = () => {
     </>
   )
 }
+
+//<Route index element={<Products />} />
 
 export default App

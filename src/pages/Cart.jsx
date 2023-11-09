@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import useLocalStorage from '../hooks/useLocalStorage';
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { cartStorage, updateItem, removeItem, removeAllItem } from '../redux/index';
+import { cartStorage, updateItem, removeItem } from '../redux/index';
 import { Dropdown, Button } from '../components/index';
 
 const Cart = () => {
@@ -49,9 +49,9 @@ const Cart = () => {
         dispatch(removeItem(productId))
     }
 
-    const handleRemoveAllItem = () => {
-        dispatch(removeAllItem())
-    }
+    // const handleRemoveAllItem = () => {
+    //     dispatch(removeAllItem())
+    // }
 
 
     return (

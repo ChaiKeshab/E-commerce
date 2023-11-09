@@ -1,37 +1,17 @@
 import React from "react"
-import { useEffect, useRef } from "react"
-import { useSelector, useDispatch, shallowEqual } from "react-redux"
-import { fetchAllCategory, cleanUpAllCategory } from '../redux/index'
 import { Carousel2, GridCategory, HomeSkeleton } from "../components/index"
-
 import { slider1, slider2, slider3 } from '../assets/index'
 import { Footer } from '../layouts/index'
+import { useQuery } from "@tanstack/react-query"
+import { fetchAllCategories } from '../APIs/productAPIs'
 
 
 const Home = () => {
 
-    const dispatch = useDispatch()
-    const apiCallRef = useRef(false)
-
-    const categoryArr = useSelector((state) => state.productRelatedReducer.allCategory, shallowEqual)
-    const categoryLoading = useSelector((state) => state.productRelatedReducer.loading, shallowEqual)
-
-    // useEffect(() => {
-    //     dispatch(fetchAllCategory())
-
-    //     return () => {
-    // dispatch(cleanUpAllCategory())
-    //     }
-    // }, [])
-
-    useEffect(() => {
-        dispatch(fetchAllCategory())
-
-        return () => {
-            dispatch(cleanUpAllCategory())
-        }
-
-    }, [dispatch])
+    const allCategoryQuery = useQuery({
+        queryKey: ["allCategory"],
+        queryFn: fetchAllCategories,
+    })
 
 
     const categoryImage = [
@@ -43,14 +23,8 @@ const Home = () => {
 
     return (
         <div className="HOME">
-            <div className=' top-0 z-10 pb-2 bg-primary'>
+            {/* <div className=' top-0 z-10 pb-2 bg-primary'>
 
-            </div>
-
-            {/* <div className="h-[300px] md:h-[600px]">
-                <Carousel
-                    images={[slider2, slider1, slider3]}
-                />
             </div> */}
 
             <div className="w-full">
@@ -58,10 +32,10 @@ const Home = () => {
                     images={[slider2, slider1, slider3]}
                 />
             </div>
-
             <div className="grid mt-10 px-5 md:px-32 gap-10 grid-cols-[repeat(auto-fill,minmax(300px,1fr))]">
-                {categoryLoading ? <HomeSkeleton /> : (
-                    categoryArr.map((item, index) => (
+
+                {allCategoryQuery.isLoading ? <HomeSkeleton /> : (
+                    allCategoryQuery.data?.map((item, index) => (
 
                         <React.Fragment key={index}>
                             <GridCategory
